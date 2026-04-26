@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DineOps — Tutorial & Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:    #0F172A;
+    --navy2:   #1E293B;
+    --navy3:   #334155;
+    --amber:   #F59E0B;
+    --amber2:  #D97706;
+    --amber3:  #FEF3C7;
+    --white:   #F8FAFC;
+    --muted:   #94A3B8;
+    --border:  #1E293B;
+    --red:     #DC2626;
+    --green:   #16A34A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(15,23,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-brand span { color: var(--amber); }
+
+  .nav-links {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); background: var(--navy2); }
+  .nav-links a.active { color: var(--amber); }
+
+  /* ─── HERO ────────────────────────────────────────────── */
+  #hero {
+    padding: 140px 40px 100px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    color: var(--amber);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+  }
+
+  h1 em { color: var(--amber); font-style: normal; }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: var(--navy);
+  }
+
+  .btn-primary:hover { background: var(--amber2); transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: var(--navy2);
+    color: var(--white);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover { background: var(--navy3); }
+
+  /* ─── MODULES QUICK-NAV ───────────────────────────────── */
+  .module-nav {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 40px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .module-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .module-chip:hover {
+    color: var(--amber);
+    border-color: var(--amber);
+    background: rgba(245,158,11,0.05);
+  }
+
+  .module-chip .chip-icon {
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(245,158,11,0.15);
+    border-radius: 4px;
+    font-size: 11px;
+  }
+
+  /* ─── SECTION WRAPPER ─────────────────────────────────── */
+  .section {
+    padding: 80px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  /* ─── DIVIDER ─────────────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ─── GETTING STARTED ─────────────────────────────────── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0 24px;
+    position: relative;
+  }
+
+  .step:not(:last-child) .step-line {
+    position: absolute;
+    left: 25px; top: 52px; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .step-num {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--navy2);
+    border: 2px solid var(--amber);
+    color: var(--amber);
+    font-size: 15px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content {
+    padding: 12px 0 40px;
+  }
+
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ─── MODULE CARDS ────────────────────────────────────── */
+  #modules { padding-top: 0; }
+
+  .module-block {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    background: var(--navy2);
+  }
+
+  .module-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+
+  .module-header:hover { background: var(--navy3); }
+
+  .module-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(245,158,11,0.12);
+    border: 1px solid rgba(245,158,11,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .module-title-wrap { flex: 1; }
+
+  .module-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .module-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .module-chevron {
+    color: var(--muted);
+    font-size: 18px;
+    transition: transform 0.3s;
+  }
+
+  .module-block.open .module-chevron { transform: rotate(180deg); }
+  .module-block.open .module-header { background: rgba(245,158,11,0.06); }
+
+  .module-body {
+    display: none;
+    padding: 0 28px 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .module-block.open .module-body { display: block; }
+
+  .feature-list {
+    list-style: none;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .feature-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--muted);
+    align-items: flex-start;
+  }
+
+  .feature-list li::before {
+    content: '→';
+    color: var(--amber);
+    flex-shrink: 0;
+    font-weight: 600;
+    margin-top: 1px;
+  }
+
+  .feature-list li strong { color: var(--white); }
+
+  .how-to {
+    margin-top: 24px;
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+
+  .how-to-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .how-to ol {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .how-to ol li {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 4px;
+  }
+
+  .how-to ol li strong { color: var(--white); }
+
+  .tag-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tag-amber { background: rgba(245,158,11,0.1); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+  .tag-green { background: rgba(22,163,74,0.1);  color: #4ade80;    border: 1px solid rgba(22,163,74,0.2); }
+  .tag-red   { background: rgba(220,38,38,0.1);  color: #f87171;    border: 1px solid rgba(220,38,38,0.2); }
+  .tag-blue  { background: rgba(59,130,246,0.1); color: #93c5fd;    border: 1px solid rgba(59,130,246,0.2); }
+
+  /* ─── TIPS GRID ───────────────────────────────────────── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  .tip-card {
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .tip-icon { font-size: 22px; margin-bottom: 12px; }
+
+  .tip-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .tip-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── FAQ ─────────────────────────────────────────────── */
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+  }
+
+  .faq-q {
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+  }
+
+  .faq-q:hover { color: var(--amber); }
+
+  .faq-icon {
+    font-size: 20px;
+    color: var(--muted);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+
+  .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--amber); }
+
+  .faq-a {
+    display: none;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    padding-top: 12px;
+  }
+
+  .faq-item.open .faq-a { display: block; }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .footer-brand {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .footer-brand span { color: var(--amber); }
+
+  .footer-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--amber); }
+
+  .footer-copy {
+    color: var(--navy3);
+    font-size: 12px;
+    margin-top: 32px;
+  }
+
+  /* ─── SCROLL REVEAL ───────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────── */
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 60px 20px; }
+    #hero { padding: 120px 20px 60px; }
+    h1 { font-size: 36px; }
+    .module-nav { padding: 0 20px 40px; }
+    footer { padding: 40px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<nav>
+  <a href="#hero" class="nav-brand">Dine<span>Ops</span></a>
+  <ul class="nav-links">
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#tips">Tips</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-badge">Restaurant Operations</div>
+  <h1>Run your restaurant<br/>with <em>DineOps</em></h1>
+  <p class="hero-sub">
+    A complete offline staff management platform for small restaurants.
+    Schedule employees, track hours, record tips, and get automated labor cost insights — all in one place.
+  </p>
+  <div class="hero-actions">
+    <a href="#getting-started" class="btn btn-primary">Get Started →</a>
+    <a href="#modules" class="btn btn-secondary">Browse Modules</a>
+  </div>
+</section>
+
+<!-- ─── MODULE QUICK-NAV ─────────────────────────────────── -->
+<div class="module-nav">
+  <a href="#mod-employees" class="module-chip"><span class="chip-icon">👤</span> Employees</a>
+  <a href="#mod-scheduling" class="module-chip"><span class="chip-icon">📅</span> Scheduling</a>
+  <a href="#mod-timeclock" class="module-chip"><span class="chip-icon">🕐</span> Time Clock</a>
+  <a href="#mod-tips" class="module-chip"><span class="chip-icon">💰</span> Tips & Pay</a>
+  <a href="#mod-dashboard" class="module-chip"><span class="chip-icon">📊</span> Dashboard</a>
+</div>
+
+<div class="divider"></div>
+
+<!-- ─── GETTING STARTED ───────────────────────────────────── -->
+<section id="getting-started" class="section">
+  <p class="section-label">First time?</p>
+  <h2>Getting started</h2>
+  <p class="section-sub">DineOps is fully offline — no account, no internet required. Get up and running in under five minutes.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <div class="step-title">Install DineOps from the Microsoft Store</div>
+        <div class="step-desc">Search for "DineOps" in the Microsoft Store and click Install. The app is a one-time purchase — no subscriptions.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <div class="step-title">Launch the app — database is created automatically</div>
+        <div class="step-desc">On first launch, DineOps creates a local database in <code style="font-family:'DM Mono',monospace;font-size:13px;color:var(--amber)">%LOCALAPPDATA%\DineOps\DineOps.db</code>. No setup wizard needed.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <div class="step-title">Add your employees first</div>
+        <div class="step-desc">Go to the <strong>Employees</strong> module and add each staff member with their role, hourly rate, and hire date. Every other module references your employee list, so this is the right starting point.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <div class="step-title">Create the week's schedule</div>
+        <div class="step-desc">Open <strong>Scheduling</strong>, find the employee, enter their shift times for each day. The app auto-calculates total hours and projected labor cost.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">5</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <div class="step-title">Use Time Clock daily</div>
+        <div class="step-desc">Each shift, employees clock in and out by name or ID. DineOps records hours, calculates cost, and flags variance against the schedule.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">6</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <div class="step-title">Check your Dashboard for insights</div>
+        <div class="step-desc">The Dashboard automatically generates plain-English reports and recommendations based on your last 7, 14, and 30 days of data. No manual reporting required.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── MODULES ───────────────────────────────────────────── -->
+<section id="modules" class="section">
+  <p class="section-label">Module guide</p>
+  <h2>Five modules, one restaurant</h2>
+  <p class="section-sub">Click any module to expand its full guide.</p>
+
+  <!-- EMPLOYEES -->
+  <div class="module-block open reveal" id="mod-employees">
+    <div class="module-header" onclick="toggleModule(this)">
+      <div class="module-icon">👤</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Employees</div>
+        <div class="module-subtitle">Add, search, update, and manage your staff roster</div>
+      </div>
+      <div class="module-chevron">▾</div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li><strong>Add employees</strong> with ID, name, role, phone, email, hire date, hourly rate, and overtime rate</li>
+        <li><strong>Search</strong> by Employee ID (exact) or name (partial match) — results populate the grid instantly</li>
+        <li><strong>Update</strong> any field without touching others — partial updates only change what you fill in</li>
+        <li><strong>Delete</strong> staff records with a confirmation dialog showing who you're removing</li>
+      </ul>
+      <div class="how-to">
+        <div class="how-to-title">How to add an employee</div>
+        <ol>
+          <li>Open the <strong>Employees</strong> tab in the sidebar</li>
+          <li>Fill in at minimum: <strong>Employee ID</strong> (e.g. MG or EMP001) and <strong>Full Name</strong></li>
+          <li>Add Role, Phone, Email, Hire Date, and Hourly Rate — all optional but recommended</li>
+          <li>Set Status to <strong>Active</strong> — this controls whether the employee appears in scheduling and time clock</li>
+          <li>Click <strong>Add Employee</strong> — the grid refreshes with the new record</li>
+        </ol>
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-amber">Employee ID required</span>
+        <span class="tag tag-green">Terminated = blocked from scheduling</span>
+        <span class="tag tag-blue">Partial update supported</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULING -->
+  <div class="module-block reveal" id="mod-scheduling">
+    <div class="module-header" onclick="toggleModule(this)">
+      <div class="module-icon">📅</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Scheduling</div>
+        <div class="module-subtitle">Create and manage weekly shift schedules with per-day detail</div>
+      </div>
+      <div class="module-chevron">▾</div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li><strong>7-day schedule grid</strong> with Start Time, End Time, Break (minutes), and Station per day</li>
+        <li><strong>Automatic hour calculation</strong> — enter times, the app computes total hours and labor cost</li>
+        <li><strong>Overnight shifts</strong> are handled automatically (e.g. 11:00 PM to 3:00 AM = 4 hours)</li>
+        <li><strong>Overtime warning</strong> when a schedule exceeds 40 hours — you can still save with confirmation</li>
+        <li><strong>Find &amp; Update</strong> any existing schedule by Schedule ID without restarting from scratch</li>
+      </ul>
+      <div class="how-to">
+        <div class="how-to-title">How to create a schedule</div>
+        <ol>
+          <li>In the <strong>Create Schedule</strong> section, type the Employee ID or Name and click <strong>Find</strong></li>
+          <li>Confirm the right employee appears in the confirmation dialog</li>
+          <li>Fill in Start/End times for each working day — leave the full row blank for days off</li>
+          <li>Optionally add break minutes (e.g. 30) and station (e.g. Bar, Kitchen)</li>
+          <li>Accepted time formats: <code style="font-family:'DM Mono',monospace;font-size:13px;color:var(--amber)">9:00 AM</code>, <code style="font-family:'DM Mono',monospace;font-size:13px;color:var(--amber)">17:00</code>, <code style="font-family:'DM Mono',monospace;font-size:13px;color:var(--amber)">9:00 PM</code></li>
+          <li>Click <strong>Save Schedule</strong> — total hours and cost appear in the success message</li>
+        </ol>
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-amber">Blank day = OFF</span>
+        <span class="tag tag-green">Overnight shift supported</span>
+        <span class="tag tag-blue">Station tracked per day</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIME CLOCK -->
+  <div class="module-block reveal" id="mod-timeclock">
+    <div class="module-header" onclick="toggleModule(this)">
+      <div class="module-icon">🕐</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Time Clock</div>
+        <div class="module-subtitle">Clock in/out, track actual hours, and calculate variance vs schedule</div>
+      </div>
+      <div class="module-chevron">▾</div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li><strong>Expected Today</strong> board shows everyone scheduled for today's day of the week</li>
+        <li><strong>Clocked In Today</strong> board shows active shifts with elapsed time</li>
+        <li><strong>Variance tracking</strong> — actual hours vs scheduled hours, and the cost difference</li>
+        <li><strong>Day-swap friendly</strong> — any active employee can clock in even if not scheduled today</li>
+        <li><strong>Long shift warning</strong> if a shift exceeds 16 hours — catches forgotten clock-outs</li>
+        <li><strong>Update</strong> any clock record to fix typos in times — all derived values recalculate</li>
+      </ul>
+      <div class="how-to">
+        <div class="how-to-title">Daily clock-in/out flow</div>
+        <ol>
+          <li>Open the <strong>Time Clock</strong> tab at the start of each shift</li>
+          <li>Check <strong>Expected Today</strong> to see who's due in</li>
+          <li>Type the employee's name or ID in the Clock In/Out field and click <strong>Clock In</strong></li>
+          <li>The employee moves from Expected to <strong>Clocked In Today</strong></li>
+          <li>At shift end, type their name/ID again and click <strong>Clock Out</strong></li>
+          <li>A confirmation shows hours worked, cost, and variance vs their schedule</li>
+        </ol>
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-amber">Variance vs schedule auto-calculated</span>
+        <span class="tag tag-green">Split shifts supported</span>
+        <span class="tag tag-red">16+ hour warning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS & PAY -->
+  <div class="module-block reveal" id="mod-tips">
+    <div class="module-header" onclick="toggleModule(this)">
+      <div class="module-icon">💰</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Tips &amp; Pay</div>
+        <div class="module-subtitle">Record tips per employee, view work summaries, and track weekly totals</div>
+      </div>
+      <div class="module-chevron">▾</div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li><strong>Record tips</strong> per employee per date — multiple tip entries for split shifts are supported</li>
+        <li><strong>Today's snapshot</strong> cards show total tips collected and number of people who worked today</li>
+        <li><strong>Employee Work Summary</strong> shows every clock record alongside same-day tip totals</li>
+        <li><strong>Weekly hours</strong> view shows current week, last week, and the week before for any employee</li>
+        <li><strong>Date defaults to today</strong> — backdating up to 90 days is supported for catch-up entry</li>
+      </ul>
+      <div class="how-to">
+        <div class="how-to-title">How to record tips at end of shift</div>
+        <ol>
+          <li>Open <strong>Tips &amp; Pay</strong> at the end of each shift</li>
+          <li>Enter the Employee ID or Name, tip amount, and date (leave blank for today)</li>
+          <li>Click <strong>Save Tip</strong> — the Today's Total card updates immediately</li>
+          <li>Repeat for each employee who earned tips that shift</li>
+          <li>Use <strong>Show Employee Records</strong> to review an employee's complete history of hours and tips</li>
+        </ol>
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-amber">Multiple tips per day OK</span>
+        <span class="tag tag-green">Backdate up to 90 days</span>
+        <span class="tag tag-blue">Tips + hours on one view</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="module-block reveal" id="mod-dashboard">
+    <div class="module-header" onclick="toggleModule(this)">
+      <div class="module-icon">📊</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Dashboard</div>
+        <div class="module-subtitle">Automated insights, reports, and recommendations from your data</div>
+      </div>
+      <div class="module-chevron">▾</div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li><strong>Today's overview</strong> — expected staff, clocked in, no-shows, hours, variance, labor cost, tips</li>
+        <li><strong>Rolling windows</strong> — same metrics for last 7, 14, and 30 days for trend comparison</li>
+        <li><strong>Plain-English report</strong> — four narrative paragraphs explaining what the numbers mean</li>
+        <li><strong>Automated recommendations</strong> — color-coded action items (🔴 red / 🟡 yellow / 🟢 green) based on 30-day patterns</li>
+        <li><strong>Auto-refreshes</strong> every time you open the Dashboard — no manual refresh button needed</li>
+      </ul>
+      <div class="how-to">
+        <div class="how-to-title">Reading your recommendations</div>
+        <ol>
+          <li><strong style="color:#f87171">Red</strong> — urgent: labor overrun or significant cost variance needs attention now</li>
+          <li><strong style="color:#fbbf24">Yellow</strong> — monitor: something worth watching, like understaffing or low tips per hour</li>
+          <li><strong style="color:#4ade80">Green</strong> — healthy: strong performance, team doing well</li>
+          <li>The report section explains each metric in plain language — no spreadsheet expertise needed</li>
+        </ol>
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-amber">7 / 14 / 30 day windows</span>
+        <span class="tag tag-green">Auto-refresh on open</span>
+        <span class="tag tag-blue">Plain-English narrative</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── PRO TIPS ───────────────────────────────────────────── -->
+<section id="tips" class="section">
+  <p class="section-label">Power user</p>
+  <h2>Tips for best results</h2>
+  <p class="section-sub">Small habits that make DineOps work better over time.</p>
+
+  <div class="tips-grid">
+    <div class="tip-card reveal">
+      <div class="tip-icon">⚡</div>
+      <div class="tip-title">Set hourly rates before scheduling</div>
+      <div class="tip-desc">Labor cost calculations on the Dashboard are only accurate if each employee's Hourly Rate is filled in. Set it when you add the employee, not later.</div>
+    </div>
+    <div class="tip-card reveal">
+      <div class="tip-icon">📅</div>
+      <div class="tip-title">Use the Find button before filling in shifts</div>
+      <div class="tip-desc">In Scheduling, click Find to verify the right employee loaded before spending time filling out 7 days of shifts. Saves frustration if you mistype the ID.</div>
+    </div>
+    <div class="tip-card reveal">
+      <div class="tip-icon">🕐</div>
+      <div class="tip-title">Clock out at end of every shift</div>
+      <div class="tip-desc">Variance and labor cost reports are only accurate for completed shifts. Open clock-ins show $0 cost until they're closed, which skews the Dashboard.</div>
+    </div>
+    <div class="tip-card reveal">
+      <div class="tip-icon">💰</div>
+      <div class="tip-title">Record tips the same day</div>
+      <div class="tip-desc">You can backdate up to 90 days, but entering tips same-day takes 30 seconds and keeps the "Today's Total" card accurate for real-time decisions.</div>
+    </div>
+    <div class="tip-card reveal">
+      <div class="tip-icon">🔍</div>
+      <div class="tip-title">Use Schedule ID (not name) to update schedules</div>
+      <div class="tip-desc">If an employee has multiple schedule records, searching by Schedule ID guarantees you load the right one into the update form.</div>
+    </div>
+    <div class="tip-card reveal">
+      <div class="tip-icon">💾</div>
+      <div class="tip-title">Back up your database regularly</div>
+      <div class="tip-desc">Copy <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--amber)">%LOCALAPPDATA%\DineOps\DineOps.db</code> to an external drive or cloud folder weekly. This single file is your entire restaurant's history.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── FAQ ───────────────────────────────────────────────── -->
+<section id="faq" class="section">
+  <p class="section-label">Common questions</p>
+  <h2>FAQ</h2>
+
+  <div class="faq-item open reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      Does DineOps require an internet connection?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">No. DineOps is fully offline. All data is stored locally on your Windows PC in a SQLite database file. No cloud account, no subscription, no internet required after the initial download from the Microsoft Store.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      Where is my data stored?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">Your data is stored in <code style="font-family:'DM Mono',monospace;font-size:13px;color:var(--amber)">C:\Users\YourName\AppData\Local\DineOps\DineOps.db</code>. You can back this file up by copying it anywhere. To restore, replace the file in the same location.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      Can I schedule an employee who swapped days?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">Yes. The Time Clock module lets any active employee clock in regardless of whether they appear on today's schedule. This is intentional — day swaps happen in real restaurants without always getting updated in the system.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      What happens if I delete an employee with clock records?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">The employee record is removed from the Employees table, but their clock-in and tip records remain in the database. They'll show as an unnamed employee in historical reports. For this reason, it's better to set a departed employee's Status to "Terminated" rather than deleting them.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      How does the Dashboard know what's a "good" labor cost?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">The Dashboard compares actual hours worked (from Time Clock) against scheduled hours (from Scheduling) to calculate variance. A recommendation appears when variance exceeds 10% of total scheduled hours, or when variance cost exceeds $500 over 30 days. These thresholds are based on standard restaurant labor management guidelines.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      Can multiple people use DineOps at the same time?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">Not simultaneously — DineOps is a single-user desktop app. One manager or owner runs it on one Windows PC. For very small restaurants, this matches the typical workflow (one person manages staff operations). Multi-user sync is a planned future feature.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      How do I fix a wrong clock-in or clock-out time?
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">Go to Time Clock → View All Clock Records → find the record's Clock ID using the Search function → enter that Clock ID in the Update section → correct the time → click Update. All derived values (hours worked, cost, variance) recalculate automatically.</div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-brand">Dine<span>Ops</span></div>
+  <div class="footer-sub">Restaurant staff management for small businesses</div>
+  <ul class="footer-links">
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#tips">Tips</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="footer-copy">Built with DineOps &copy; 2026 &mdash; Minar Ahmad Siddique</div>
+</footer>
+
+<script>
+  function toggleModule(header) {
+    const block = header.closest('.module-block');
+    block.classList.toggle('open');
+  }
+
+  function toggleFaq(q) {
+    const item = q.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active nav link highlight
+  const sections = document.querySelectorAll('section[id], div[id^="mod-"]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
